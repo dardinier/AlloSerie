@@ -10,27 +10,35 @@ const PATHS  = {
 
 const common = {
     entry: {
-        app: ['babel-polyfill', path.join(PATHS.app, '/index.jsx')]
+        app: path.join(PATHS.app, '/index.jsx')
     },
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['.js', '.jsx']
     },
     output: {
         path: PATHS.build,
         filename: '[name].js'
     },
     module: {
-        loaders: [
-            {
-                test:  /\.(js|jsx)$/,
-                loader: 'babel',
-                exclude: /node_modules/,
-                query: {
-                    cacheDirectory: true,
-                    presets: ['react', 'es2015']
+      rules: [
+        {
+          test: /\.(js|jsx)$/,
+          exclude: /(node_modules|server)/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [[
+                'env',
+                {
+                  "targets": {
+                    "chrome": 52
+                  }
                 }
+              ], "react"]
             }
-        ]
+          }
+        }
+      ]
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -43,14 +51,18 @@ if (process.env.NODE_ENV == 'dev') {
     module.exports = merge(common, {
         entry: [
             'react-hot-loader/patch',
-            'webpack-dev-server/client?http://localhost:4000',
             'webpack/hot/only-dev-server',
             PATHS.app
         ],
         plugins: [
             new webpack.HotModuleReplacementPlugin()
         ],
-        devtool: "eval-source-map"
+        devtool: "eval-source-map",
+        devServer: {
+          contentBase: PATHS.build,
+          compress: true,
+          port: 9000
+        }
     });
 }
 
@@ -75,4 +87,3 @@ if (process.env.NODE_ENV == 'production') {
         devtool: "source-map"
     });
 }
-
