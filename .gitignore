@@ -3,3 +3,4 @@ npm-debug.log
 build
 !data/.gitkeep
 data/*
+yarn.lock

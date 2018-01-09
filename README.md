@@ -1,10 +1,10 @@
-# Project
+# Project LicPro 2017/2018
 
-## Part 1 - api
+## Part 1 - Workspace
 
-[API](doc/swagger)
+## Part 2 - Webpack
 
-## Part 2 - react
+## Part 2 - React
 
 ## npm run ...
 

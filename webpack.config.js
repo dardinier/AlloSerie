@@ -49,7 +49,8 @@ if (process.env.NODE_ENV == 'dev') {
         ],
         plugins: [
             new webpack.HotModuleReplacementPlugin()
-        ]
+        ],
+        devtool: "eval-source-map"
     });
 }
 
@@ -70,7 +71,8 @@ if (process.env.NODE_ENV == 'production') {
                     warnings: false
                 }
             })
-        ]
+        ],
+        devtool: "source-map"
     });
 }
 
