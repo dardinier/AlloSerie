@@ -17,7 +17,15 @@ class Yolo extends Component {
 
 class Swag extends Component {
     render() {
-        return(<h1>Swag</h1>);
+        return (
+            <div>
+                <h1>Conjecture</h1>
+                <p>
+                    Supposition fondée sur des probabilités, mais qui n'est pas contrôlée
+                    par les faits ; présomption, hypothèse : On est réduit à des conjectures sur ses motivations.
+                </p>
+            </div>
+        );
     }
 };
 
