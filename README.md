@@ -22,5 +22,5 @@
 
 ## Contributors
 
-- Mathieu Vincent : [mathieu.vincent@etu.uca.fr](mathieu.vincent@etu.uca.fr)
-- Alexis Dardinier : [alexis.dardinier@etu.uca.fr](alexis.dardinier@etu.uca.fr)
+- Mathieu Vincent : [mathieu.vincent@etu.uca.fr](mailto:mathieu.vincent@etu.uca.fr)
+- Alexis Dardinier : [alexis.dardinier@etu.uca.fr](mailto:alexis.dardinier@etu.uca.fr)
