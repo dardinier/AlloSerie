@@ -19,3 +19,8 @@
 * [node-uuid](https://www.npmjs.com/package/node-uuid)
 * [frisby](https://www.npmjs.com/package/frisby)
 * [node-find-files](https://www.npmjs.com/package/node-find-files)
+
+## Contributors
+
+- Mathieu Vincent : [mathieu.vincent@etu.uca.fr](mathieu.vincent@etu.uca.fr)
+- Alexis Dardinier : [alexis.dardinier@etu.uca.fr](alexis.dardinier@etu.uca.fr)
