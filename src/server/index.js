@@ -1,7 +1,7 @@
 const express = require('express');
 const episodesAPI = require('./episodesAPI.js');
 const config = require('./config.js');
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
 const app = express();
 
