@@ -1,8 +1,23 @@
 var express = require('express');
 var router = express.Router();
+const uuidv4 = require('uuid/v4');
 
 router.post('/', function(req, res) {
-    res.send('Create an episode');
+    let body = req.body;
+
+    if (typeof body.name !== "string" || typeof body.code !== "string" || typeof body.score !== "number") {
+        res.status(400).end();
+    }
+
+    /* Generate a random UID */
+    body.id = uuidv4();
+
+    /** TO-DO
+     * Create the file of the episode
+     */
+
+    res.status(201);
+    res.send(body);
 });
 
 router.get('/', function(req, res) {
