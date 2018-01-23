@@ -17,6 +17,13 @@ router.post('/', function(req, res) {
         return;
     }
 
+    /* Test if there is only 3 attributes */
+    const keys = Object.keys(body);
+    if (keys.length != 3) {
+        res.status(400).end();
+        return;
+    }
+
     /* Generate a random UID */
     body.id = uuidv4();
 
