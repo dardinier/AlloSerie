@@ -60,7 +60,7 @@ exports.findOne = (id) => {
                 reject(error);
                 return;
             }
-            resolve(readFile(files.filter(file => file == "episode." + id + ".json")[0]));
+            resolve(readFile(files.filter(file => file === "episode." + id + ".json")[0]));
         });
     });
 };
@@ -84,7 +84,7 @@ exports.delete = (id) => {
                 reject(error);
                 return;
             }
-            resolve(deleteFile(files.filter(file => file == "episode." + id + ".json")[0]));
+            resolve(deleteFile(files.filter(file => file === "episode." + id + ".json")[0]));
         });
     });
 };
