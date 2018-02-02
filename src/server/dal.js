@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const config = require('./config');
-const uuidv4 = require("uuid/v4");
 
 const readFile = (filePath) => {
     return new Promise((resolve, reject) => {
@@ -66,7 +65,6 @@ exports.findOne = (id) => {
 };
 
 exports.insert = (data) => {
-    data.id = uuidv4();
     return new Promise((resolve, reject) => {
         writeFile(data).then((data) => {
             resolve(data);

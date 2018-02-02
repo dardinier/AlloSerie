@@ -2,7 +2,7 @@ const config = require('./config');
 const express = require('express');
 const router = express.Router();
 const dal = require('./dal');
-
+const uuidv4 = require('uuid/v4');
 /**
  * Create an episode
  */
@@ -15,6 +15,9 @@ router.post('/', function(req, res) {
         res.status(400).end();
         return;
     }
+
+    /* Generate the episode ID */
+    body.id = uuidv4();
 
     /* Insert the new episode */
     dal.insert(body)
@@ -78,7 +81,7 @@ router.put('/:id', function(req, res) {
     dal.findOne(req.params.id)
         .then((episode) => {
             if(body.name != null) {
-                if (typeof body.name == "string") {
+                if (typeof body.name === "string") {
                     episode.name = body.name;
                 } else {
                     res.status(400).end();
@@ -86,7 +89,7 @@ router.put('/:id', function(req, res) {
             }
 
             if(body.code != null) {
-                if (typeof body.code == "string") {
+                if (typeof body.code === "string") {
                     episode.code = body.code;
                 } else {
                     res.status(400).end();
@@ -94,7 +97,7 @@ router.put('/:id', function(req, res) {
             }
 
             if(body.score != null) {
-                if (typeof body.score == "number") {
+                if (typeof body.score === "number") {
                     episode.score = body.score;
                 } else {
                     res.status(400).end();
