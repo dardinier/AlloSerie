@@ -7,33 +7,36 @@ const port = 4598;
 
 const pathData = path.join(__dirname, 'server/data');
 
-fs.mkdir(pathData);
-
 const server = child_process.spawn(
     'node',
-    [path.join(__dirname, '../src/server/index.js')],
-    {env: {PORT: port, DATA: pathData}}
+    [ path.join(__dirname, '../src/server/index.js')],
+    {
+      env: {PORT: port, DATA: pathData, PATH: process.env.PATH},
+      stdio: 'inherit'
+    }
 );
 
-server.stdout.addListener('data', function (data) {
-    sys.print('SERVER : '+data);
-});
-
-server.stderr.addListener('data', function (data) {
-    sys.print('SERVER : '+data);
-});
-
 setTimeout(function() {
-    const test = child_process.exec('SERVER_PORT='+port+' node '+path.join(__dirname, '../node_modules/.bin/jasmine-node')+' --verbose '+path.join(__dirname, 'server'));
-
-    test.stdout.on('data', function(data) {
-        console.log(data);
-    });
-    test.stderr.on('data', function(data) {
-        console.log(data);
-    });
+    const test = child_process.spawn(
+      'node',
+      [
+        path.join(__dirname, '../node_modules/.bin/jest'),
+        '--verbose',
+        path.join(__dirname, 'server', 'api_spec.js')
+      ],
+      {
+        env: {
+          SERVER_PORT: port,
+          PATH: process.env.PATH,
+          FORCE_COLOR: true,
+          DATA: pathData,
+        },
+        stdio: 'inherit'
+      }
+    );
 
     test.on('close', function(code) {
+        console.log('Close Server');
         server.kill();
     });
 
