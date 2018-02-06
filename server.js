@@ -52,7 +52,7 @@ var server = {
             historyApiFallback: true,
             publicPath: '/',
             proxy: {
-                '/notes/*': {
+                '/api/episodes': {
                     target: 'http://localhost:3000',
                 }
             }
