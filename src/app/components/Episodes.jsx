@@ -2,7 +2,7 @@ import React from "react";
 import EpisodesList from "./EpisodesList";
 import EpisodeForm from "./EpisodeForm";
 
-class Episode extends React.Component {
+class Episodes extends React.Component {
 
   constructor() {
     super();
@@ -46,6 +46,7 @@ class Episode extends React.Component {
   render() {
     return (
       <div>
+        {this.props.match.params.id}
         <EpisodesList episodes={this.state.episodes} deleteEpisode={this.deleteEpisode}/>
         <EpisodeForm submitForm={this.submitForm}/>
       </div>
@@ -53,4 +54,4 @@ class Episode extends React.Component {
   }
 }
 
-export default Episode;
+export default Episodes;
