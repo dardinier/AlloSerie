@@ -45,10 +45,15 @@ class Episodes extends React.Component {
 
   render() {
     return (
-      <div>
-        {this.props.match.params.id}
-        <EpisodesList episodes={this.state.episodes} deleteEpisode={this.deleteEpisode}/>
-        <EpisodeForm submitForm={this.submitForm}/>
+      <div className="container">
+        <div className="row">
+          <div className="col-9">
+            <EpisodesList episodes={this.state.episodes} deleteEpisode={this.deleteEpisode}/>
+          </div>
+          <div className="col-3">
+            <EpisodeForm submitForm={this.submitForm}/>
+          </div>
+        </div>
       </div>
     );
   }

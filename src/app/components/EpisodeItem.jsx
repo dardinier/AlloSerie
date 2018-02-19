@@ -13,10 +13,17 @@ class EpisodeItem extends React.Component {
 
   render() {
     return (
-      <div className="episode">
-        <div className="episode__description">{this.props.name}, {this.props.code} : {this.props.score}</div>
-        <button onClick={this.deleteEpisode}>Supprimer</button>
-      </div>
+      <tr className="episode">
+        <td>{this.props.name}</td>
+        <td>{this.props.code}</td>
+        <td>{this.props.score}</td>
+        <td>
+          <a type="button" className="btn btn-outline-primary" href={this.props.id}>Voir le détail</a>
+          <button type="button" className="btn btn-outline-danger"
+                  onClick={this.deleteEpisode}>Supprimer
+          </button>
+        </td>
+      </tr>
     );
   }
 }
