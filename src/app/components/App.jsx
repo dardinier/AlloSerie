@@ -16,8 +16,10 @@ export default class App extends Component {
         <Router>
           <div>
             <Header/>
-            <Route exact path='/' component={Episodes}/>
-            <Route path="/:id" component={EpisodeDetail}/>
+            <div className="container">
+              <Route exact path='/' component={Episodes}/>
+              <Route path="/:id" component={EpisodeDetail}/>
+            </div>
           </div>
         </Router>
       </Provider>

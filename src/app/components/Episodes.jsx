@@ -16,7 +16,7 @@ class Episodes extends React.Component {
   componentDidMount() {
     fetch('/api/episodes')
       .then(response => response.json())
-      .then(data => this.setState({ episodes: data }));
+      .then(data => this.setState({episodes: data}));
   }
 
   submitForm(name, code, score) {
@@ -34,7 +34,7 @@ class Episodes extends React.Component {
       body: JSON.stringify(newEpisode)
     })
       .then(response => response.json())
-      .then(episode => this.setState({ episodes: [...this.state.episodes, episode]}));
+      .then(episode => this.setState({episodes: [...this.state.episodes, episode]}));
   }
 
   deleteEpisode(id) {
@@ -46,14 +46,12 @@ class Episodes extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-9">
-            <EpisodesList episodes={this.state.episodes} deleteEpisode={this.deleteEpisode}/>
-          </div>
-          <div className="col-3">
-            <EpisodeForm submitForm={this.submitForm}/>
-          </div>
+      <div className="row">
+        <div className="col-md-9 col-sm-12">
+          <EpisodesList episodes={this.state.episodes} deleteEpisode={this.deleteEpisode}/>
+        </div>
+        <div className="col-md-3 col-sm-12">
+          <EpisodeForm submitForm={this.submitForm}/>
         </div>
       </div>
     );
