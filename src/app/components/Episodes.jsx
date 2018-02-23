@@ -33,7 +33,8 @@ class Episodes extends React.Component {
       },
       body: JSON.stringify(newEpisode)
     })
-      .then(() => this.setState({ episodes: [...this.state.episodes, newEpisode]}));
+      .then(response => response.json())
+      .then(episode => this.setState({ episodes: [...this.state.episodes, episode]}));
   }
 
   deleteEpisode(id) {

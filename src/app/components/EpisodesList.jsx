@@ -9,7 +9,8 @@ const EpisodesList = ({ episodes, deleteEpisode }) => {
           <th>Série</th>
           <th>Code</th>
           <th>Note</th>
-
+          <th/>
+          <th/>
         </tr>
       </thead>
       <tbody>
