@@ -53,6 +53,7 @@ const common = {
   },
   plugins: [
     new HtmlWebpackPlugin({
+      title: "Allo Série",
       template: path.join(__dirname) + '/index.ejs'
     }),
     new ExtractTextPlugin('[name].css'),
