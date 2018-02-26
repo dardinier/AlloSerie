@@ -27,13 +27,15 @@ function deleteFakeEpisode(done) {
       throw err
     }
     for (const file of files) {
-      fs.unlink(path.join(DATA_DIR, file), err => {
-        if (err) {
-          done();
-          throw err
-        }
-      });
-      done();
+      if (file !== '.gitkeep') {
+        fs.unlink(path.join(DATA_DIR, file), err => {
+          if (err) {
+            done();
+            throw err
+          }
+        });
+        done();
+      }
     }
   });
 }

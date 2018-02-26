@@ -45,7 +45,7 @@ exports.findAll = () => {
                 reject(error);
                 return;
             }
-            resolve(Promise.all(files.map((file) => {
+            resolve(Promise.all(files.filter((file) => file !== '.gitkeep').map((file) => {
                 return readFile(file);
             })));
         });
