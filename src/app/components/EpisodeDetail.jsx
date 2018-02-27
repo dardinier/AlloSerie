@@ -6,9 +6,7 @@ class EpisodeDetail extends React.Component {
     super();
     this.onCloseModal = this.onCloseModal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.onNameChange = this.onNameChange.bind(this);
-    this.onCodeChange = this.onCodeChange.bind(this);
-    this.onScoreChange = this.onScoreChange.bind(this);
+    this.handleFormChange = this.handleFormChange.bind(this);
     this.state = {
       episode: {},
       episodeTemp: {},
@@ -30,42 +28,37 @@ class EpisodeDetail extends React.Component {
   }
 
   handleSubmit() {
-    const episodeTemp = {
-      name: this.state.episodeTemp.name,
-      code: this.state.episodeTemp.code,
-      score: Number(this.state.episodeTemp.score)
-    };
-    fetch('/api/episodes/' + this.state.episodeTemp.id, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(episodeTemp)
-    })
-      .then(response => response.json())
-      .then(episode => {
-        this.setState({ episode: episode, episodeTemp: episode });
-        $('#editModal').modal('hide');
+    if (!isNaN(parseFloat(this.state.episodeTemp.score))) {
+      const episodeTemp = {
+        name: this.state.episodeTemp.name,
+        code: this.state.episodeTemp.code,
+        score: Number(this.state.episodeTemp.score)
+      };
+      fetch('/api/episodes/' + this.state.episodeTemp.id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(episodeTemp)
       })
-      .catch(() => this.setState({ status: 'error' }));
+        .then(response => response.json())
+        .then(episode => {
+          this.setState({ episode: episode, episodeTemp: episode });
+          $('#editModal').modal('hide');
+        });
+    } else {
+      this.setState({status: 'error'});
+    }
   }
 
-  onNameChange(event) {
-    let episodeTemp = Object.assign({}, this.state.episodeTemp);
-    episodeTemp.name = event.target.value;
-    this.setState({ episodeTemp });
-  }
-
-  onCodeChange(event) {
-    let episodeTemp = Object.assign({}, this.state.episodeTemp);
-    episodeTemp.code = event.target.value;
-    this.setState({ episodeTemp });
-  }
-
-  onScoreChange(event) {
-    let episodeTemp = Object.assign({}, this.state.episodeTemp);
-    episodeTemp.score = Number(event.target.value);
-    this.setState({ episodeTemp });
+  handleFormChange(event) {
+    const {name, value} = event.target;
+    this.setState(prevState => ({
+      episodeTemp: {
+        ...prevState.episodeTemp,
+        [name]: value
+      }
+    }));
   }
 
   render() {
@@ -109,25 +102,17 @@ class EpisodeDetail extends React.Component {
 
                       <div className="form-group">
                         <label>Série</label>
-                        <input type="text" className="form-control" value={this.state.episodeTemp.name} onChange={this.onNameChange}/>
+                        <input type="text" name="name" className="form-control" value={this.state.episodeTemp.name} onChange={this.handleFormChange}/>
                       </div>
 
                       <div className="form-group">
                         <label>Code</label>
-                        <input type="text" className="form-control" value={this.state.episodeTemp.code} onChange={this.onCodeChange}/>
+                        <input type="text" name="code" className="form-control" value={this.state.episodeTemp.code} onChange={this.handleFormChange}/>
                       </div>
 
                       <div className="form-group">
                         <label>Note</label>
-                        <input
-                          type="number"
-                          className="form-control"
-                          min="0"
-                          max="10"
-                          step="0.1"
-                          value={this.state.episodeTemp.score}
-                          onChange={this.onScoreChange}
-                        />
+                        <input type="number" className="form-control" name="score" min="0" max="10" step="0.1" value={this.state.episodeTemp.score} onChange={this.handleFormChange}/>
                       </div>
 
                     </form>
