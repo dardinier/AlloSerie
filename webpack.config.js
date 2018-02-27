@@ -35,7 +35,7 @@ const common = {
                   "chrome": 52
                 }
               }
-            ], "react"]
+            ], "env", "react", "es2015", "airbnb"]
           }
         }
       },
@@ -54,6 +54,7 @@ const common = {
   plugins: [
     new HtmlWebpackPlugin({
       title: "Allo Série",
+      favicon: "./assets/images/logo.png",
       template: path.join(__dirname) + '/index.ejs'
     }),
     new ExtractTextPlugin('[name].css'),
