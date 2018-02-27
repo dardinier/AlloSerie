@@ -18,10 +18,10 @@ class EpisodeItem extends React.Component {
         <td>{this.props.code}</td>
         <td>{this.props.score}</td>
         <td>
-          <a type="button" className="btn btn-outline-primary" href={this.props.id}>Voir le détail</a>
+          <a type="button" className="btn btn-block btn-outline-primary" href={this.props.id}>Voir le détail</a>
         </td>
         <td>
-          <button type="button" className="btn btn-outline-danger" onClick={this.deleteEpisode}>
+          <button type="button" className="btn btn-block btn-outline-danger" onClick={this.deleteEpisode}>
             Supprimer
           </button>
         </td>

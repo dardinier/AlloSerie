@@ -32,6 +32,8 @@ class EpisodeForm extends React.Component {
   render() {
     return (
       <div>
+        <h4>Ajouter un épisode :</h4>
+        <hr/>
         <div className="form-group">
           <label>Série</label>
           <input type="text" className="form-control" ref={this.setNameInputRef}/>
@@ -44,8 +46,9 @@ class EpisodeForm extends React.Component {
           <label>Note</label>
           <input type="number" className="form-control" min="0" max="10" step="0.1" ref={this.setScoreInputRef}/>
         </div>
+        <hr/>
         <div className="form-group">
-          <button type="submit" className="btn btn-outline-success" onClick={this.submitForm}>Ajouter cet épisode</button>
+          <button type="submit" className="btn btn-block btn-outline-success" onClick={this.submitForm}>Ajouter cet épisode</button>
         </div>
       </div>
     );
