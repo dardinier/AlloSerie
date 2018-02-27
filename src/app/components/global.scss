@@ -1,3 +1,12 @@
 .navbar {
   margin-bottom: 20px;
 }
+
+.navbar-brand {
+  display: flex !important;
+  align-items: center;
+
+  &__title {
+    padding-left: 10px;
+  }
+}
