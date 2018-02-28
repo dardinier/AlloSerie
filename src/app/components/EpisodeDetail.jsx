@@ -52,14 +52,32 @@ class EpisodeDetail extends React.Component {
     }
   }
 
-  handleFormChange(event) {
-    const {name, value} = event.target;
-    this.setState(prevState => ({
-      episodeTemp: {
-        ...prevState.episodeTemp,
-        [name]: value
+  handleFormChange(event, score) {
+    if (score !== undefined) {
+      this.setState(prevState => ({
+        episodeTemp: {
+          ...prevState.episodeTemp,
+          score
+        }
+      }));
+    } else {
+      const {name, value} = event.target;
+      if (name === 'score') {
+        this.setState(prevState => ({
+          episodeTemp: {
+            ...prevState.episodeTemp,
+            [name]: Number(value)
+          }
+        }));
+      } else {
+        this.setState(prevState => ({
+          episodeTemp: {
+            ...prevState.episodeTemp,
+            [name]: value
+          }
+        }));
       }
-    }));
+    }
   }
 
   render() {

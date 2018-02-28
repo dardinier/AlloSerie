@@ -42,6 +42,7 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "jest": "^22.1.4",
     "jsonfile": "^4.0.0",
+    "material-ui": "^0.20.0",
     "node-find-files": "0.0.4",
     "node-sass": "^4.7.2",
     "node-uuid": "^1.4.7",

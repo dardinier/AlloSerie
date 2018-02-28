@@ -1,4 +1,6 @@
 import React from 'react';
+import Slider from 'material-ui/Slider';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const EpisodeForm = ({ name, code, score, handleFormChange }) => {
   return (
@@ -15,7 +17,17 @@ const EpisodeForm = ({ name, code, score, handleFormChange }) => {
 
       <div className="form-group">
         <label>Note</label>
-        <input type="number" className="form-control" name="score" min="0" max="10" step="0.1" value={score} onChange={handleFormChange}/>
+
+        <div className="row">
+          <div className="col-6">
+            <MuiThemeProvider>
+              <Slider min={0} max={10} step={0.1} value={score} onChange={handleFormChange} sliderStyle={{'margin':'10px 0px'}}/>
+            </MuiThemeProvider>
+          </div>
+          <div className="col-6">
+            <input type="number" className="form-control" name="score" min="0" max="10" step="0.1" value={score} onChange={handleFormChange}/>
+          </div>
+        </div>
       </div>
     </div>
   );
