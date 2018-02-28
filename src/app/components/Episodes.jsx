@@ -1,6 +1,6 @@
 import React from "react";
 import EpisodesList from "./EpisodesList";
-import EpisodeForm from "./EpisodeForm";
+import EpisodeAdd from "./EpisodeAdd";
 
 class Episodes extends React.Component {
 
@@ -51,7 +51,7 @@ class Episodes extends React.Component {
           <EpisodesList episodes={this.state.episodes} deleteEpisode={this.deleteEpisode}/>
         </div>
         <div className="col-md-3 col-sm-12">
-          <EpisodeForm submitForm={this.submitForm}/>
+          <EpisodeAdd submitForm={this.submitForm}/>
         </div>
       </div>
     );

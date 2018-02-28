@@ -1,4 +1,5 @@
 import React from 'react';
+import EpisodeForm from "./EpisodeForm";
 
 class EpisodeDetail extends React.Component {
 
@@ -98,24 +99,7 @@ class EpisodeDetail extends React.Component {
                   </div>
 
                   <div className="modal-body">
-                    <form onSubmit={this.handleSubmit}>
-
-                      <div className="form-group">
-                        <label>Série</label>
-                        <input type="text" name="name" className="form-control" value={this.state.episodeTemp.name} onChange={this.handleFormChange}/>
-                      </div>
-
-                      <div className="form-group">
-                        <label>Code</label>
-                        <input type="text" name="code" className="form-control" value={this.state.episodeTemp.code} onChange={this.handleFormChange}/>
-                      </div>
-
-                      <div className="form-group">
-                        <label>Note</label>
-                        <input type="number" className="form-control" name="score" min="0" max="10" step="0.1" value={this.state.episodeTemp.score} onChange={this.handleFormChange}/>
-                      </div>
-
-                    </form>
+                    <EpisodeForm name={this.state.episodeTemp.name} code={this.state.episodeTemp.code} score={this.state.episodeTemp.score} handleFormChange={this.handleFormChange} />
                   </div>
 
                   {this.state.status === 'error' &&
