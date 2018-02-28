@@ -19,10 +19,11 @@ class Episodes extends React.Component {
       .then(data => this.setState({episodes: data}));
   }
 
-  submitForm(name, code, score) {
+  submitForm(name, code, synopsis, score) {
     const newEpisode = {
       name: name,
       code: code,
+      synopsis: synopsis,
       score: Number(score)
     };
 

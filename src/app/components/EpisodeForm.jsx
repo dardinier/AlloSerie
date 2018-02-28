@@ -2,7 +2,7 @@ import React from 'react';
 import Slider from 'material-ui/Slider';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-const EpisodeForm = ({ name, code, score, handleFormChange }) => {
+const EpisodeForm = ({ name, code, synopsis, score, handleFormChange }) => {
   return (
     <div>
       <div className="form-group">
@@ -13,6 +13,11 @@ const EpisodeForm = ({ name, code, score, handleFormChange }) => {
       <div className="form-group">
         <label>Code</label>
         <input type="text" name="code" className="form-control" value={code} onChange={handleFormChange}/>
+      </div>
+
+      <div className="form-group">
+        <label>Synopsis</label>
+        <textarea name="synopsis" className="form-control" value={synopsis} rows="5" onChange={handleFormChange}/>
       </div>
 
       <div className="form-group">

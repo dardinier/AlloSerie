@@ -41,8 +41,8 @@ class EpisodeAdd extends React.Component {
   }
 
   submitForm() {
-    this.props.submitForm(this.state.episodeTemp.name, this.state.episodeTemp.code, this.state.episodeTemp.score);
-    this.setState({ episodeTemp: { name: '', code: '', score: '' } });
+    this.props.submitForm(this.state.episodeTemp.name, this.state.episodeTemp.synopsis, this.state.episodeTemp.code, this.state.episodeTemp.score);
+    this.setState({ episodeTemp: { name: '', code: '', synopsis: '', score: undefined } });
   }
 
   render() {
@@ -50,7 +50,7 @@ class EpisodeAdd extends React.Component {
       <div>
         <h4>Ajouter un épisode :</h4>
         <hr/>
-        <EpisodeForm name={this.state.episodeTemp.name} code={this.state.episodeTemp.code} score={this.state.episodeTemp.score} handleFormChange={this.handleFormChange}/>
+        <EpisodeForm name={this.state.episodeTemp.name} code={this.state.episodeTemp.code} synopsis={this.state.episodeTemp.synopsis} score={this.state.episodeTemp.score} handleFormChange={this.handleFormChange}/>
         <div className="form-group">
           <button type="submit" className="btn btn-block btn-outline-success" onClick={this.submitForm}>Ajouter cet épisode</button>
         </div>

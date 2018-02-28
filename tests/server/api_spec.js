@@ -10,10 +10,10 @@ const DATA_DIR = process.env.DATA;
 function createFakeEpisode(done) {
   Promise.all([
     dal.insert(
-      {id: "1111-2222", name: "Breaking Bad", code: "S01E01", score: 8}
+      {id: "1111-2222", name: "Breaking Bad", code: "S01E01", synopsis: "Résumé", score: 8}
     ),
     dal.insert(
-      {id: "1111-3333", name: "Lethal Weapon", code: "S01E01", score: 7}
+      {id: "1111-3333", name: "Lethal Weapon", code: "S01E01",synopsis: "Résumé", score: 7}
     )
   ]).then(() => {
     done();
@@ -55,6 +55,7 @@ describe('Add an episode', () => {
     frisby.post(`${URL}/`, {
       name: "Blindspot",
       code: "S03E02",
+      synopsis: "Résumé",
       score: 5
     })
       .expect('status', 201)
@@ -62,6 +63,7 @@ describe('Add an episode', () => {
         'id': Joi.string().required(),
         'name': Joi.string().required(),
         'code': Joi.string().required(),
+        'synopsis': Joi.string().required(),
         'score': Joi.number().required()
       }).then((res) => {
       id = res.body.id;
@@ -96,6 +98,7 @@ describe('Get all episodes', () => {
         'id': Joi.string().required(),
         'name': Joi.string().required(),
         'code': Joi.string().required(),
+        'synopsis': Joi.string().required(),
         'score': Joi.number().required()
       })
       .done(done);
@@ -121,6 +124,7 @@ describe('Get an episode', () => {
         'id': Joi.string().required(),
         'name': Joi.string().required(),
         'code': Joi.string().required(),
+        'synopsis': Joi.string().required(),
         'score': Joi.number().required()
       }).then((res) => {
       id = res.body.id;
@@ -150,7 +154,7 @@ describe('Delete an episode', () => {
 
   it('should not have the file in data', (done) => {
     fs.stat(path.join(DATA_DIR, `episode.${id}.json`), (error) => {
-      if (error.code != 'ENOENT') {
+      if (error.code !== 'ENOENT') {
         fail();
       }
       done();
@@ -172,6 +176,7 @@ describe('Update an episode', () => {
     frisby.put(`${URL}/1111-2222`, {
       name: "expectedName",
       code: "expectedCode",
+      synopsis: "expectedSynopsis",
       score: 42
     })
       .expect('status', 200)
@@ -179,11 +184,13 @@ describe('Update an episode', () => {
         'id': Joi.string().required(),
         'name': Joi.string().required(),
         'code': Joi.string().required(),
+        'synopsis': Joi.string().required(),
         'score': Joi.number().required()
       })
       .then((response) => {
         expect(response.json.name).toBe("expectedName");
         expect(response.json.code).toBe("expectedCode");
+        expect(response.json.synopsis).toBe("expectedSynopsis");
         expect(response.json.score).toBe(42);
       })
       .done(done);

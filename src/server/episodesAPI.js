@@ -11,7 +11,7 @@ router.post('/', function(req, res) {
     let body = req.body;
 
     /* Test if parameters are well setted */
-    if (typeof body.name !== "string" || typeof body.code !== "string" || typeof body.score !== "number") {
+    if (typeof body.name !== "string" || typeof body.code !== "string" || typeof body.synopsis !== "string" || typeof body.score !== "number") {
         res.status(400).end();
         return;
     }
@@ -95,6 +95,14 @@ router.put('/:id', function(req, res) {
                     res.status(400).end();
                 }
             }
+
+          if(body.synopsis != null) {
+            if (typeof body.synopsis === "string") {
+              episode.synopsis = body.synopsis;
+            } else {
+              res.status(400).end();
+            }
+          }
 
             if(body.score != null) {
                 if (typeof body.score === "number") {

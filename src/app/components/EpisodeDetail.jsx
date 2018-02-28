@@ -33,6 +33,7 @@ class EpisodeDetail extends React.Component {
       const episodeTemp = {
         name: this.state.episodeTemp.name,
         code: this.state.episodeTemp.code,
+        synopsis: this.state.episodeTemp.synopsis,
         score: Number(this.state.episodeTemp.score)
       };
       fetch('/api/episodes/' + this.state.episodeTemp.id, {
@@ -86,16 +87,18 @@ class EpisodeDetail extends React.Component {
         {this.state.episode.id !== null
           ?
           <div>
-            <h1>{this.state.episode.name} - {this.state.episode.code}</h1>
-            <h5>Note : {this.state.episode.score}/10</h5>
-            <button
-              type="button"
-              className="btn btn-outline-primary"
-              data-toggle="modal"
-              data-target="#editModal"
-            >
+
+            <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target="#editModal">
               Editer cet épisode
             </button>
+            <hr/>
+            <h1>{this.state.episode.name} - {this.state.episode.code}</h1>
+            <h5>Note : {this.state.episode.score}/10</h5>
+            <hr/>
+            <div>
+              <h4>Résumé :</h4>
+              <p>{this.state.episode.synopsis}</p>
+            </div>
 
             <div
               className="modal fade"
@@ -117,7 +120,7 @@ class EpisodeDetail extends React.Component {
                   </div>
 
                   <div className="modal-body">
-                    <EpisodeForm name={this.state.episodeTemp.name} code={this.state.episodeTemp.code} score={this.state.episodeTemp.score} handleFormChange={this.handleFormChange} />
+                    <EpisodeForm name={this.state.episodeTemp.name} code={this.state.episodeTemp.code} synopsis={this.state.episodeTemp.synopsis} score={this.state.episodeTemp.score} handleFormChange={this.handleFormChange} />
                   </div>
 
                   {this.state.status === 'error' &&
