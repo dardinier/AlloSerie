@@ -5,7 +5,7 @@
     "startDev": "NODE_ENV=dev node server.js",
     "build": "NODE_ENV=production node_modules/.bin/webpack",
     "watch": "NODE_ENV=dev node_modules/.bin/webpack --watch",
-    "testServer": "node tests/test_server.js"
+    "testServer": "node __tests__/test_server.js"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

@@ -24,6 +24,7 @@ const EpisodesList = ({ episodes, deleteEpisode }) => {
               id={episode.id}
               name={episode.name}
               code={episode.code}
+              logo={episode.logo}
               score={episode.score}
               deleteEpisode={deleteEpisode}
             />

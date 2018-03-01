@@ -13,7 +13,7 @@ router.post('/', function(req, res) {
     let body = req.body;
 
     /* Test if parameters are well setted */
-    if (typeof body.name !== "string" || typeof body.code !== "string" || typeof body.synopsis !== "string" || typeof body.score !== "number") {
+    if (typeof body.name !== "string" || typeof body.code !== "string" || typeof body.logo !== "string" || typeof body.synopsis !== "string" || typeof body.score !== "number") {
         res.status(400).end();
         return;
     }
@@ -97,6 +97,14 @@ router.put('/:id', function(req, res) {
                     res.status(400).end();
                 }
             }
+
+          if(body.logo != null) {
+            if (typeof body.logo === "string") {
+              episode.logo = body.logo;
+            } else {
+              res.status(400).end();
+            }
+          }
 
           if(body.synopsis != null) {
             if (typeof body.synopsis === "string") {
