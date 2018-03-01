@@ -2,12 +2,13 @@ const express = require('express');
 const router = express.Router();
 const dal = require('./dal');
 const uuidv4 = require('uuid/v4');
+
+const EPISODE_TYPE = "episode";
+
 /**
  * Create an episode
  */
 router.post('/', function(req, res) {
-
-  console.log(req.body);
 
     let body = req.body;
 
@@ -21,7 +22,7 @@ router.post('/', function(req, res) {
     body.id = uuidv4();
 
     /* Insert the new episode */
-    dal.insert(body, "episode")
+    dal.insert(body, EPISODE_TYPE)
         .then((episode) => {
             res.status(201);
             res.send(episode);
@@ -35,8 +36,7 @@ router.post('/', function(req, res) {
  * Get all episodes
  */
 router.get('/', function(req, res) {
-    console.log("La bite");
-    dal.findAll("episode")
+    dal.findAll(EPISODE_TYPE)
         .then((episodes) => {
             res.status(200);
             res.send(episodes);
@@ -50,7 +50,7 @@ router.get('/', function(req, res) {
  * Get an episode
  */
 router.get('/:id', function(req, res) {
-    dal.findOne(req.params.id, "episode")
+    dal.findOne(req.params.id, EPISODE_TYPE)
         .then((episode) => {
             res.status(200);
             res.send(episode);
@@ -64,7 +64,7 @@ router.get('/:id', function(req, res) {
  * Delete an episode
  */
 router.delete('/:id', function(req, res) {
-    dal.delete(req.params.id, "episode")
+    dal.delete(req.params.id, EPISODE_TYPE)
         .then(() => {
             res.status(204).end();
         })
@@ -80,7 +80,7 @@ router.put('/:id', function(req, res) {
 
     let body = req.body;
 
-    dal.findOne(req.params.id, "episode")
+    dal.findOne(req.params.id, EPISODE_TYPE)
         .then((episode) => {
             if(body.name != null) {
                 if (typeof body.name === "string") {
@@ -114,9 +114,9 @@ router.put('/:id', function(req, res) {
                 }
             }
 
-            dal.delete(req.params.id, "episode")
+            dal.delete(req.params.id, EPISODE_TYPE)
                 .then(() => {
-                    dal.insert(episode, "episode")
+                    dal.insert(episode, EPISODE_TYPE)
                         .then((episode) => {
                             res.status(200);
                             res.send(episode);
