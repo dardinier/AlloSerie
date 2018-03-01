@@ -18,7 +18,7 @@ var server = {
         this.process.stderr.addListener('data', function (data) {
             sys.print(data);
         });
-        
+
         this.process.addListener('exit', function (code) {
             console.log('Child process exited: ' + code);
             this.process = null;
@@ -60,7 +60,7 @@ var server = {
             if (err) {
                 return console.log(err);
             }
-            console.log(`Development server running at http://localhost:${port}`);
+            console.log(`Front-End development server running at http://localhost:${port}`);
         });
     },
     restart: function(path) {
