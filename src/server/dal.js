@@ -2,9 +2,12 @@ const fs = require('fs');
 const path = require('path');
 const config = require('./config');
 
+
+/* Internal functions */
 const readFile = (filePath) => {
+    console.log("Reading : ", filePath);
     return new Promise((resolve, reject) => {
-        fs.readFile(path.join(config.data, filePath), "utf8", (error, data) => {
+        fs.readFile(filePath, "utf8", (error, data) => {
             if (error) {
                 reject(error);
                 return;
@@ -14,9 +17,9 @@ const readFile = (filePath) => {
     });
 };
 
-const writeFile = (data) => {
+const writeFile = (data, filePath) => {
     return new Promise((resolve, reject) => {
-        fs.writeFile(path.join(config.data, "episode." + data.id + ".json"), JSON.stringify(data), "utf8", (error) => {
+        fs.writeFile(filePath, JSON.stringify(data), "utf8", (error) => {
             if (error) {
                 reject(error);
                 return;
@@ -28,7 +31,7 @@ const writeFile = (data) => {
 
 const deleteFile = (filePath) => {
     return new Promise((resolve, reject) => {
-        fs.unlink(path.join(config.data, filePath), (error) => {
+        fs.unlink(filePath, (error) => {
             if (error) {
                 reject(error);
                 return;
@@ -38,35 +41,36 @@ const deleteFile = (filePath) => {
     });
 };
 
-exports.findAll = () => {
+/* Exposed functions */
+exports.findAll = (type) => {
     return new Promise((resolve, reject) => {
-        fs.readdir(config.data, (error, files) => {
+        fs.readdir(path.join(config.data, type), (error, files) => {
             if (error) {
                 reject(error);
                 return;
             }
             resolve(Promise.all(files.filter((file) => file !== '.gitkeep').map((file) => {
-                return readFile(file);
+                return readFile(path.join(config.data, type, file));
             })));
         });
     });
 };
 
-exports.findOne = (id) => {
+exports.findOne = (id, type) => {
     return new Promise((resolve, reject) => {
-        fs.readdir(config.data, (error, files) => {
+        fs.readdir(path.join(config.data, type), (error, files) => {
             if (error) {
                 reject(error);
                 return;
             }
-            resolve(readFile(files.filter(file => file === "episode." + id + ".json")[0]));
+            resolve(readFile(path.join(config.data, type, files.filter(file => file === type + "." + id + ".json")[0])));
         });
     });
 };
 
-exports.insert = (data) => {
+exports.insert = (data, type) => {
     return new Promise((resolve, reject) => {
-        writeFile(data).then((data) => {
+        writeFile(data, path.join(config.data, type, type + "." + data.id + ".json")).then((data) => {
             resolve(data);
         })
             .catch((error) => {
@@ -75,14 +79,14 @@ exports.insert = (data) => {
     });
 };
 
-exports.delete = (id) => {
+exports.delete = (id, type) => {
     return new Promise((resolve, reject) => {
-        fs.readdir(config.data, (error, files) => {
+        fs.readdir(path.join(config.data, type), (error, files) => {
             if (error) {
                 reject(error);
                 return;
             }
-            resolve(deleteFile(files.filter(file => file === "episode." + id + ".json")[0]));
+            resolve(deleteFile(path.join(config.data, type, files.filter(file => file === type + "." + id + ".json")[0])));
         });
     });
 };

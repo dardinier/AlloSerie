@@ -1,4 +1,3 @@
-const config = require('./config');
 const express = require('express');
 const router = express.Router();
 const dal = require('./dal');
@@ -7,6 +6,8 @@ const uuidv4 = require('uuid/v4');
  * Create an episode
  */
 router.post('/', function(req, res) {
+
+  console.log(req.body);
 
     let body = req.body;
 
@@ -20,7 +21,7 @@ router.post('/', function(req, res) {
     body.id = uuidv4();
 
     /* Insert the new episode */
-    dal.insert(body)
+    dal.insert(body, "episode")
         .then((episode) => {
             res.status(201);
             res.send(episode);
@@ -34,7 +35,8 @@ router.post('/', function(req, res) {
  * Get all episodes
  */
 router.get('/', function(req, res) {
-    dal.findAll()
+    console.log("La bite");
+    dal.findAll("episode")
         .then((episodes) => {
             res.status(200);
             res.send(episodes);
@@ -48,7 +50,7 @@ router.get('/', function(req, res) {
  * Get an episode
  */
 router.get('/:id', function(req, res) {
-    dal.findOne(req.params.id)
+    dal.findOne(req.params.id, "episode")
         .then((episode) => {
             res.status(200);
             res.send(episode);
@@ -62,7 +64,7 @@ router.get('/:id', function(req, res) {
  * Delete an episode
  */
 router.delete('/:id', function(req, res) {
-    dal.delete(req.params.id)
+    dal.delete(req.params.id, "episode")
         .then(() => {
             res.status(204).end();
         })
@@ -78,7 +80,7 @@ router.put('/:id', function(req, res) {
 
     let body = req.body;
 
-    dal.findOne(req.params.id)
+    dal.findOne(req.params.id, "episode")
         .then((episode) => {
             if(body.name != null) {
                 if (typeof body.name === "string") {
@@ -112,9 +114,9 @@ router.put('/:id', function(req, res) {
                 }
             }
 
-            dal.delete(req.params.id)
+            dal.delete(req.params.id, "episode")
                 .then(() => {
-                    dal.insert(episode)
+                    dal.insert(episode, "episode")
                         .then((episode) => {
                             res.status(200);
                             res.send(episode);

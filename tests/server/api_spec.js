@@ -5,15 +5,18 @@ const Joi = frisby.Joi;
 const dal = require('../../src/server/dal');
 
 const URL = `http://localhost:${process.env.SERVER_PORT}/api/episodes`;
-const DATA_DIR = process.env.DATA;
+const EPISODE_TYPE = "episode";
+const DATA_DIR = path.join(process.env.DATA, EPISODE_TYPE);
 
 function createFakeEpisode(done) {
   Promise.all([
     dal.insert(
-      {id: "1111-2222", name: "Breaking Bad", code: "S01E01", synopsis: "Résumé", score: 8}
+      {id: "1111-2222", name: "Breaking Bad", code: "S01E01", synopsis: "Résumé", score: 8},
+      EPISODE_TYPE
     ),
     dal.insert(
-      {id: "1111-3333", name: "Lethal Weapon", code: "S01E01",synopsis: "Résumé", score: 7}
+      {id: "1111-3333", name: "Lethal Weapon", code: "S01E01",synopsis: "Résumé", score: 7},
+      EPISODE_TYPE
     )
   ]).then(() => {
     done();
