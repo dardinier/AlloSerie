@@ -13,16 +13,31 @@ const LOGO_DATA_DIR = path.join(process.env.DATA, LOGO_TYPE);
 function createFakeEpisode(done) {
   Promise.all([
     dal.insert(
-      {id: "1111-2222", name: "Breaking Bad", code: "S01E01", logo: "1234-5678", synopsis: "Résumé", score: 8},
+      {
+        id: "1111-2222",
+        name: "Breaking Bad",
+        code: "S01E01",
+        logo: "1234-5678",
+        synopsis: "Résumé",
+        score: 8
+      },
       EPISODE_TYPE
     ),
     dal.insert(
-      {id: "1111-3333", name: "Lethal Weapon", code: "S01E01",logo: "5678-1234", synopsis: "Résumé", score: 7},
+      {
+        id: "1111-3333",
+        name: "Lethal Weapon",
+        code: "S01E01",
+        logo: "5678-1234",
+        synopsis: "Résumé",
+        score: 7
+      },
       EPISODE_TYPE
     )
-  ]).then(() => {
-    done();
-  });
+  ])
+    .then(() => {
+      done();
+    });
 }
 
 function createFakeLogos(done) {
@@ -35,9 +50,10 @@ function createFakeLogos(done) {
       {id: "5678-1234", image64: "IMAGE-64-2"},
       LOGO_TYPE
     )
-  ]).then(() => {
-    done();
-  });
+  ])
+    .then(() => {
+      done();
+    });
 }
 
 function deleteFakeDatas(done, dirName) {
@@ -88,10 +104,8 @@ describe('Add an episode', () => {
         'logo': Joi.string().required(),
         'synopsis': Joi.string().required(),
         'score': Joi.number().required()
-      }).then((res) => {
-        console.log(res.body);
-        id = res.body.id;
-    })
+      })
+      .then(response => id = response.json.id)
       .done(done);
   });
 
@@ -140,8 +154,6 @@ describe('Get an episode', () => {
     deleteFakeDatas(done, EPISODE_DATA_DIR);
   });
 
-  let id;
-
   it('should make an HTTP request', (done) => {
     frisby.get(`${URL}/1111-2222`)
       .expect('status', 200)
@@ -152,9 +164,8 @@ describe('Get an episode', () => {
         'logo': Joi.string().required(),
         'synopsis': Joi.string().required(),
         'score': Joi.number().required()
-      }).then((res) => {
-      id = res.body.id;
-    }).done(done);
+      })
+      .done(done);
   });
 });
 
@@ -168,14 +179,12 @@ describe('Delete an episode', () => {
     deleteFakeDatas(done, EPISODE_DATA_DIR);
   });
 
-  let id;
+  let id = "1111-2222";
 
   it('should make an HTTP request', (done) => {
-    frisby.del(`${URL}/1111-2222`)
+    frisby.del(`${URL}/${id}`)
       .expect('status', 204)
-      .then((res) => {
-        id = res.body.id;
-      }).done(done);
+      .done(done);
   });
 
   it('should not have the file in data', (done) => {

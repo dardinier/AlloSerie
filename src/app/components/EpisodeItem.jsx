@@ -27,23 +27,16 @@ class EpisodeItem extends React.Component {
 
   render() {
     return (
-      <tr className="episode">
-        <td>{this.props.name}</td>
-        <td>{this.props.code}</td>
-        <td>{this.props.score}</td>
-        <td>
+      <div className="col-lg-4 col-sm-6 portfolio-item">
+        <a className="card h-100" href={this.props.id}>
           {this.state.logo !== null &&
-          <img src={`data:image/jpg;base64,${this.state.logo}`} />}
-        </td>
-        <td>
-          <a type="button" className="btn btn-block btn-outline-primary" href={this.props.id}>Voir le détail</a>
-        </td>
-        <td>
-          <button type="button" className="btn btn-block btn-outline-danger" onClick={this.deleteEpisode}>
-            Supprimer
-          </button>
-        </td>
-      </tr>
+          <img className="card-img-top" src={`data:image/jpg;base64,${this.state.logo}`} />}
+          <div className="card-body">
+            <h4 className="card-title">{this.props.name}</h4>
+            <p className="card-text">{this.props.code}</p>
+          </div>
+        </a>
+      </div>
     );
   }
 }

@@ -6,17 +6,7 @@ const EpisodesList = ({ episodes, deleteEpisode }) => {
     <div>
       <h4>Liste des épisodes :</h4>
       <hr/>
-      <table className="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th>Série</th>
-            <th>Code</th>
-            <th>Note</th>
-            <th/>
-            <th/>
-          </tr>
-        </thead>
-        <tbody>
+      <div className="row">
         {episodes.map((episode) => {
           return (
             <EpisodeItem
@@ -30,10 +20,9 @@ const EpisodesList = ({ episodes, deleteEpisode }) => {
             />
           )
         })}
-        </tbody>
-      </table>
+      </div>
     </div>
-    );
+  );
 };
 
 export default EpisodesList;

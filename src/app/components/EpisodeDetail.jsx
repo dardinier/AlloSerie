@@ -11,6 +11,7 @@ class EpisodeDetail extends React.Component {
     this.state = {
       episode: {},
       episodeTemp: {},
+      logo: {},
       status: null
     }
   }
@@ -21,6 +22,9 @@ class EpisodeDetail extends React.Component {
       .then(response => response.json())
       .then(episode => {
         this.setState({ episode: episode, episodeTemp: episode });
+        fetch('/api/logos/' + episode.logo)
+          .then(response => response.json())
+          .then(logo => this.setState({ logo }))
       });
   }
 
@@ -91,10 +95,21 @@ class EpisodeDetail extends React.Component {
             <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target="#editModal">
               Editer cet épisode
             </button>
-            <hr/>
-            <h1>{this.state.episode.name} - {this.state.episode.code}</h1>
-            <h5>Note : {this.state.episode.score}/10</h5>
-            <hr/>
+            <div style={{
+              height: "300px",
+              paddingLeft: "20px",
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+              backgroundImage: `url(data:image/jpg;base64,${this.state.logo.image64})`,
+              color: "white",
+              textShadow: "0 0 1px #000, 0 0 3px #000, 0 0 5px #000",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end"
+            }}>
+              <h1>{this.state.episode.name} - {this.state.episode.code}</h1>
+              <h5>Note : {this.state.episode.score}/10</h5>
+            </div>
             <div>
               <h4>Résumé :</h4>
               <p>{this.state.episode.synopsis}</p>
