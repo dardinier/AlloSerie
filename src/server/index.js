@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '1mb' }));
 app.use('/api/episodes', episodesAPI);
 app.use('/api/logos', logosAPI);
 

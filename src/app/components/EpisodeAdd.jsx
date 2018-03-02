@@ -8,7 +8,8 @@ class EpisodeAdd extends React.Component {
     this.handleFormChange = this.handleFormChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
     this.state = {
-      episodeTemp: {}
+      episodeTemp: {},
+      logo: "3e21c905-7b9c-4ab5-995f-9232defc4952",
     };
   }
 
@@ -41,7 +42,7 @@ class EpisodeAdd extends React.Component {
   }
 
   submitForm() {
-    this.props.submitForm(this.state.episodeTemp.name, this.state.episodeTemp.synopsis, this.state.episodeTemp.code, this.state.episodeTemp.score);
+    this.props.submitForm(this.state.episodeTemp.name, this.state.episodeTemp.code, this.state.logo, this.state.episodeTemp.synopsis, this.state.episodeTemp.score);
     this.setState({ episodeTemp: { name: '', code: '', synopsis: '', score: undefined } });
   }
 

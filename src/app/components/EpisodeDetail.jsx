@@ -1,5 +1,6 @@
 import React from 'react';
 import EpisodeForm from "./EpisodeForm";
+import { Link } from 'react-router-dom';
 
 class EpisodeDetail extends React.Component {
 
@@ -8,6 +9,7 @@ class EpisodeDetail extends React.Component {
     this.onCloseModal = this.onCloseModal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleFormChange = this.handleFormChange.bind(this);
+    this.deleteEpisode = this.deleteEpisode.bind(this);
     this.state = {
       episode: {},
       episodeTemp: {},
@@ -85,44 +87,57 @@ class EpisodeDetail extends React.Component {
     }
   }
 
+  deleteEpisode() {
+    fetch('/api/episodes/' + this.state.episode.id, { method: 'DELETE' });
+  }
+
+  renderBannerStyle() {
+    if (this.state.logo.id !== null) {
+      return { backgroundImage: `url(data:image/jpg;base64,${this.state.logo.image64})` };
+    }
+    return { background: "gray" };
+  }
+
   render() {
     return (
       <div>
         {this.state.episode.id !== null
           ?
           <div>
-
-            <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target="#editModal">
-              Editer cet épisode
-            </button>
-            <div style={{
-              height: "300px",
-              paddingLeft: "20px",
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundImage: `url(data:image/jpg;base64,${this.state.logo.image64})`,
-              color: "white",
-              textShadow: "0 0 1px #000, 0 0 3px #000, 0 0 5px #000",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-end"
-            }}>
-              <h1>{this.state.episode.name} - {this.state.episode.code}</h1>
-              <h5>Note : {this.state.episode.score}/10</h5>
+            <div className="card">
+              <div>
+                <div className="logo__banner" style={this.renderBannerStyle()}>
+                  <h1>{this.state.episode.name} - {this.state.episode.code}</h1>
+                  <h5>Note : {this.state.episode.score}/10</h5>
+                </div>
+              </div>
+              <ul className="list-group list-group-flush">
+                <li className="list-group-item">
+                  <ul className="nav justify-content-center">
+                    <li className="nav-item tool-button">
+                      <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target="#editModal">
+                        Editer cet épisode
+                      </button>
+                    </li>
+                    <li className="nav-item tool-button">
+                      <Link to='/' onClick={this.deleteEpisode}>
+                        <button type="button" className="btn btn-outline-danger">
+                          Supprimer cet épisode
+                        </button>
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+                <li className="list-group-item">
+                  <div>
+                    <h4>Résumé :</h4>
+                    <p>{this.state.episode.synopsis}</p>
+                  </div>
+                </li>
+              </ul>
             </div>
-            <div>
-              <h4>Résumé :</h4>
-              <p>{this.state.episode.synopsis}</p>
-            </div>
 
-            <div
-              className="modal fade"
-              id="editModal"
-              tabIndex="-1"
-              role="dialog"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
+            <div className="modal fade" id="editModal" tabIndex="-1" role="dialog" aria-hidden="true">
               <div className="modal-dialog" role="document">
                 <div className="modal-content">
                   <div className="modal-header">

@@ -6,7 +6,7 @@ class EpisodeItem extends React.Component {
     super();
     this.deleteEpisode = this.deleteEpisode.bind(this);
     this.state = {
-      logo: null,
+      logo: {},
     };
   }
 
@@ -16,7 +16,7 @@ class EpisodeItem extends React.Component {
       .then(response => response.json())
       .then(logo => {
         console.log(logo.image64);
-        this.setState({ logo: logo.image64 });
+        this.setState({ logo });
       })
       .catch(() => console.log('crash'));
   }
@@ -25,12 +25,18 @@ class EpisodeItem extends React.Component {
     this.props.deleteEpisode(this.props.id);
   }
 
+  renderBannerStyle() {
+    if (this.state.logo.id !== null) {
+      return { backgroundImage: `url(data:image/jpg;base64,${this.state.logo.image64})` };
+    }
+    return { background: "gray" };
+  }
+
   render() {
     return (
       <div className="col-lg-4 col-sm-6 portfolio-item">
-        <a className="card h-100" href={this.props.id}>
-          {this.state.logo !== null &&
-          <img className="card-img-top" src={`data:image/jpg;base64,${this.state.logo}`} />}
+        <a className="card" href={this.props.id} style={{marginBottom: '25px'}}>
+          <div className="logo__icon" style={this.renderBannerStyle()}/>
           <div className="card-body">
             <h4 className="card-title">{this.props.name}</h4>
             <p className="card-text">{this.props.code}</p>
