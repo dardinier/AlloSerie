@@ -7,18 +7,15 @@ class EpisodeItem extends React.Component {
     this.deleteEpisode = this.deleteEpisode.bind(this);
     this.state = {
       logo: {},
+      iconStatus: "pending"
     };
   }
 
   componentDidMount() {
-    console.log('/api/logos/' + this.props.logo);
     fetch('/api/logos/' + this.props.logo)
       .then(response => response.json())
-      .then(logo => {
-        console.log(logo.image64);
-        this.setState({ logo });
-      })
-      .catch(() => console.log('crash'));
+      .then(logo => this.setState({ logo, iconStatus: "done" }))
+      .catch(() => this.setState({iconStatus: "fail"}));
   }
 
   deleteEpisode() {
@@ -26,10 +23,14 @@ class EpisodeItem extends React.Component {
   }
 
   renderBannerStyle() {
-    if (this.state.logo.id !== null) {
-      return { backgroundImage: `url(data:image/jpg;base64,${this.state.logo.image64})` };
+    switch(this.state.iconStatus) {
+      case "pending":
+        return { backgroundImage: "linear-gradient(135deg, #fee140 0%, #fa709a 100%)" };
+      case "done":
+        return { backgroundImage: `url(data:image/jpg;base64,${this.state.logo.image64})` };
+      case "fail":
+        return { backgroundImage: "url(\"assets/images/no-display.jpg\")" };
     }
-    return { background: "gray" };
   }
 
   render() {

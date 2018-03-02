@@ -1,5 +1,5 @@
 import React from 'react';
-import EpisodeForm from "./EpisodeForm";
+import EditModal from './EditModal';
 import { Link } from 'react-router-dom';
 
 class EpisodeDetail extends React.Component {
@@ -14,7 +14,8 @@ class EpisodeDetail extends React.Component {
       episode: {},
       episodeTemp: {},
       logo: {},
-      status: null
+      status: null,
+      iconStatus: "pending"
     }
   }
 
@@ -26,7 +27,8 @@ class EpisodeDetail extends React.Component {
         this.setState({ episode: episode, episodeTemp: episode });
         fetch('/api/logos/' + episode.logo)
           .then(response => response.json())
-          .then(logo => this.setState({ logo }))
+          .then(logo => this.setState({ logo, iconStatus: "done" }))
+          .catch(() => this.setState({ iconStatus: "fail" }));
       });
   }
 
@@ -92,10 +94,14 @@ class EpisodeDetail extends React.Component {
   }
 
   renderBannerStyle() {
-    if (this.state.logo.id !== null) {
-      return { backgroundImage: `url(data:image/jpg;base64,${this.state.logo.image64})` };
+    switch(this.state.iconStatus) {
+      case "pending":
+        return { backgroundImage: "linear-gradient(135deg, #fee140 0%, #fa709a 100%)" };
+      case "done":
+        return { backgroundImage: `url(data:image/jpg;base64,${this.state.logo.image64})` };
+      case "fail":
+        return { backgroundImage: "url(\"assets/images/no-display.jpg\")" };
     }
-    return { background: "gray" };
   }
 
   render() {
@@ -136,39 +142,14 @@ class EpisodeDetail extends React.Component {
                 </li>
               </ul>
             </div>
-
-            <div className="modal fade" id="editModal" tabIndex="-1" role="dialog" aria-hidden="true">
-              <div className="modal-dialog" role="document">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLabel">
-                      Editer l'épisode
-                    </h5>
-                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-
-                  <div className="modal-body">
-                    <EpisodeForm name={this.state.episodeTemp.name} code={this.state.episodeTemp.code} synopsis={this.state.episodeTemp.synopsis} score={this.state.episodeTemp.score} handleFormChange={this.handleFormChange} />
-                  </div>
-
-                  {this.state.status === 'error' &&
-                  <div className="alert alert-danger" role="alert">
-                    Une erreur s'est produite !
-                  </div>}
-
-                  <div className="modal-footer">
-                    <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">
-                      Annuler
-                    </button>
-                    <button type="button" className="btn btn-outline-success" onClick={this.handleSubmit}>
-                      Sauvegarder
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <EditModal
+              name={this.state.episodeTemp.name}
+              code={this.state.episodeTemp.code}
+              synopsis={this.state.episodeTemp.synopsis}
+              score={this.state.episodeTemp.score}
+              handleFormChange={this.handleFormChange}
+              status={this.state.status}
+              handleSubmit={this.handleSubmit}/>
           </div>
           :
           <div>
