@@ -1,6 +1,7 @@
 import React from 'react';
 import EditModal from './EditModal';
 import { Link } from 'react-router-dom';
+import LogoModal from "./LogoModal";
 
 class EpisodeDetail extends React.Component {
 
@@ -150,6 +151,7 @@ class EpisodeDetail extends React.Component {
               handleFormChange={this.handleFormChange}
               status={this.state.status}
               handleSubmit={this.handleSubmit}/>
+            <LogoModal/>
           </div>
           :
           <div>

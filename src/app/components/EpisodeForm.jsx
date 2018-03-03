@@ -11,6 +11,13 @@ const EpisodeForm = ({ name, code, synopsis, score, handleFormChange }) => {
       </div>
 
       <div className="form-group">
+        <label>Logo</label>
+        <button type="button" className="form-control btn btn-outline-primary" data-toggle="modal" data-target="#logoModal">
+          Choisir un logo
+        </button>
+      </div>
+
+      <div className="form-group">
         <label>Code</label>
         <input type="text" name="code" className="form-control" value={code} onChange={handleFormChange}/>
       </div>

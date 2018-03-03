@@ -1,5 +1,6 @@
 import React from 'react';
 import EpisodeForm from "./EpisodeForm";
+import LogoModal from "./LogoModal";
 
 class EpisodeAdd extends React.Component {
 
@@ -55,6 +56,7 @@ class EpisodeAdd extends React.Component {
         <div className="form-group">
           <button type="submit" className="btn btn-block btn-outline-success" onClick={this.submitForm}>Ajouter cet épisode</button>
         </div>
+        <LogoModal/>
       </div>
     );
   }

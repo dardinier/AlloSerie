@@ -23,13 +23,25 @@ class EpisodeItem extends React.Component {
   }
 
   renderBannerStyle() {
+    const defaultStyle = {
+      height: "150px"
+    };
     switch(this.state.iconStatus) {
       case "pending":
-        return { backgroundImage: "linear-gradient(135deg, #fee140 0%, #fa709a 100%)" };
+        return {
+          ...defaultStyle,
+          backgroundImage: "linear-gradient(135deg, #fee140 0%, #fa709a 100%)"
+        };
       case "done":
-        return { backgroundImage: `url(data:image/jpg;base64,${this.state.logo.image64})` };
+        return {
+          ...defaultStyle,
+          backgroundImage: `url(data:image/jpg;base64,${this.state.logo.image64})`
+        };
       case "fail":
-        return { backgroundImage: "url(\"assets/images/no-display.jpg\")" };
+        return {
+          ...defaultStyle,
+          backgroundImage: "url(\"assets/images/no-display.jpg\")"
+        };
     }
   }
 

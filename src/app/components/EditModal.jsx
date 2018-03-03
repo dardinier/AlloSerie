@@ -3,7 +3,7 @@ import EpisodeForm from "./EpisodeForm";
 
 const EditModal = ({name, code, synopsis, score, handleFormChange, status, handleSubmit}) => {
   return (
-    <div className="modal fade" id="editModal" tabIndex="-1" role="dialog" aria-hidden="true">
+    <div className="modal fade" id="editModal" tabIndex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
       <div className="modal-dialog" role="document">
         <div className="modal-content">
           <div className="modal-header">
