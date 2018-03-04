@@ -12,7 +12,7 @@ class EpisodeForm extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.logo !== this.props.logo) {
+    if (nextProps.logo !== this.props.logo && nextProps.logo !== undefined) {
       fetch('/api/logos/' + nextProps.logo)
         .then(response => response.json())
         .then(logo => this.setState({ actualLogo: logo }));
