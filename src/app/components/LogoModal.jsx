@@ -81,31 +81,33 @@ class LogoModal extends React.Component {
   }
 
   postLogo(file) {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      console.log(reader.result);
-
-      const logo = {
-        image64: reader.result
+    if (file.size < 1000000) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const logo = {
+          image64: reader.result
+        };
+        fetch('/api/logos', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(logo)
+        })
+          .then(response => response.json())
+          .then(logo => this.setState({logos: [...this.state.logos, logo], selectedLogo: logo }));
       };
-      fetch('/api/logos', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(logo)
-      })
-        .then(response => response.json())
-        .then(logo => this.setState({logos: [...this.state.logos, logo], selectedLogo: logo }));
-    };
-    reader.onerror = (error) => {
-      console.log('Error: ', error);
-    };
+      reader.onerror = (error) => {
+        console.log('Error: ', error);
+      };
+    } else {
+      toast.error("L'image est trop grande (requis: < 1Mo).")
+    }
   }
 
   setFileError() {
-    toast.error("Le fichier choisi n'est pas une image.");
+    toast.error("Le fichier n'est pas du bon format (requis: JPEG, JPG, PNG ou GIF)");
   }
 
   render() {

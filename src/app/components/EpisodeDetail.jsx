@@ -1,7 +1,8 @@
 import React from 'react';
 import EditModal from './EditModal';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import LogoModal from "./LogoModal";
+import {toast} from "react-toastify";
 
 class EpisodeDetail extends React.Component {
 
@@ -26,7 +27,7 @@ class EpisodeDetail extends React.Component {
     fetch('/api/episodes/' + this.props.match.params.id)
       .then(response => response.json())
       .then(episode => {
-        this.setState({ episode: episode, episodeTemp: episode });
+        this.setState({episode: episode, episodeTemp: episode});
         this.loadLogo(episode.logo);
       });
   }
@@ -34,16 +35,33 @@ class EpisodeDetail extends React.Component {
   loadLogo(logo) {
     fetch('/api/logos/' + logo)
       .then(response => response.json())
-      .then(logo => this.setState({ logo, logoStatus: "done" }))
-      .catch(() => this.setState({ logoStatus: "fail" }));
+      .then(logo => this.setState({logo, logoStatus: "done"}))
+      .catch(() => this.setState({logoStatus: "fail"}));
   }
 
   onCloseModal() {
-    this.setState({ status: null, episodeTemp: this.state.episode });
+    this.setState({status: null, episodeTemp: this.state.episode});
   }
 
   handleSubmit() {
-    if (!isNaN(parseFloat(this.state.episodeTemp.score))) {
+    let hasError = false;
+    if (this.state.episodeTemp.name === "") {
+      toast.error("Le nom est vide.");
+      hasError = true;
+    }
+    if (this.state.episodeTemp.logo === undefined) {
+      toast.error("Aucun logo n'a été défini.");
+      hasError = true;
+    }
+    if (this.state.episodeTemp.code === "") {
+      toast.error("Le code est vide.");
+      hasError = true;
+    }
+    if (this.state.episodeTemp.synopsis === "") {
+      toast.error("Le synopsis est vide.");
+      hasError = true;
+    }
+    if (!hasError) {
       const episodeTemp = {
         name: this.state.episodeTemp.name,
         code: this.state.episodeTemp.code,
@@ -63,11 +81,9 @@ class EpisodeDetail extends React.Component {
           if (this.state.episode.logo !== episode.logo) {
             this.loadLogo(episode.logo);
           }
-          this.setState({ episode: episode, episodeTemp: episode });
+          this.setState({episode: episode, episodeTemp: episode});
           $('#editModal').modal('hide');
         });
-    } else {
-      this.setState({status: 'error'});
     }
   }
 
@@ -100,21 +116,21 @@ class EpisodeDetail extends React.Component {
   }
 
   deleteEpisode() {
-    fetch('/api/episodes/' + this.state.episode.id, { method: 'DELETE' });
+    fetch('/api/episodes/' + this.state.episode.id, {method: 'DELETE'});
   }
 
   setLogo(logo) {
-    this.setState(prevState => ({ episodeTemp : { ...prevState.episodeTemp, logo }}));
+    this.setState(prevState => ({episodeTemp: {...prevState.episodeTemp, logo}}));
   }
 
   renderBannerStyle() {
-    switch(this.state.logoStatus) {
+    switch (this.state.logoStatus) {
       case "pending":
-        return { backgroundImage: "linear-gradient(135deg, #fee140 0%, #fa709a 100%)" };
+        return {backgroundImage: "linear-gradient(135deg, #fee140 0%, #fa709a 100%)"};
       case "done":
-        return { backgroundImage: `url(${this.state.logo.image64})` };
+        return {backgroundImage: `url(${this.state.logo.image64})`};
       case "fail":
-        return { backgroundImage: "url(\"assets/images/no-display.jpg\")" };
+        return {backgroundImage: "url(\"assets/images/no-display.jpg\")"};
     }
   }
 
@@ -135,7 +151,8 @@ class EpisodeDetail extends React.Component {
                 <li className="list-group-item">
                   <ul className="nav justify-content-center">
                     <li className="nav-item tool-button">
-                      <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target="#editModal">
+                      <button type="button" className="btn btn-outline-primary" data-toggle="modal"
+                              data-target="#editModal">
                         Editer cet épisode
                       </button>
                     </li>
