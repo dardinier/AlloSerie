@@ -1,7 +1,7 @@
 import React from "react";
 import EpisodeForm from "./EpisodeForm";
 
-const EditModal = ({name, code, synopsis, score, handleFormChange, status, handleSubmit}) => {
+const EditModal = ({name, code, logo, synopsis, score, handleFormChange, status, handleSubmit}) => {
   return (
     <div className="modal fade" id="editModal" tabIndex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
       <div className="modal-dialog" role="document">
@@ -16,7 +16,13 @@ const EditModal = ({name, code, synopsis, score, handleFormChange, status, handl
           </div>
 
           <div className="modal-body">
-            <EpisodeForm name={name} code={code} synopsis={synopsis} score={score} handleFormChange={handleFormChange} />
+            <EpisodeForm
+              name={name}
+              code={code}
+              logo={logo}
+              synopsis={synopsis}
+              score={score}
+              handleFormChange={handleFormChange}/>
           </div>
 
           {status === 'error' &&

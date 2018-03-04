@@ -20,7 +20,6 @@ class Episodes extends React.Component {
   }
 
   submitForm(name, code, logo, synopsis, score) {
-    console.log(logo);
     const newEpisode = {
       name: name,
       code: code,

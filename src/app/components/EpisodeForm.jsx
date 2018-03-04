@@ -2,7 +2,7 @@ import React from 'react';
 import Slider from 'material-ui/Slider';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-const EpisodeForm = ({ name, code, synopsis, score, handleFormChange }) => {
+const EpisodeForm = ({name, code, logo, synopsis, score, handleFormChange}) => {
   return (
     <div>
       <div className="form-group">
@@ -12,9 +12,16 @@ const EpisodeForm = ({ name, code, synopsis, score, handleFormChange }) => {
 
       <div className="form-group">
         <label>Logo</label>
-        <button type="button" className="form-control btn btn-outline-primary" data-toggle="modal" data-target="#logoModal">
-          Choisir un logo
-        </button>
+        {
+          logo === undefined ?
+          <button type="button" className="form-control btn btn-outline-primary" data-toggle="modal" data-target="#logoModal">
+            Choisir un logo
+          </button>
+          :
+            <button type="button" className="form-control btn btn-outline-secondary" data-toggle="modal" data-target="#logoModal">
+              Changer le logo actuel
+            </button>
+        }
       </div>
 
       <div className="form-group">
@@ -33,11 +40,13 @@ const EpisodeForm = ({ name, code, synopsis, score, handleFormChange }) => {
         <div className="row">
           <div className="col-6">
             <MuiThemeProvider>
-              <Slider min={0} max={10} step={0.1} value={score} onChange={handleFormChange} sliderStyle={{'margin':'10px 0px'}}/>
+              <Slider min={0} max={10} step={0.1} value={score} onChange={handleFormChange}
+                      sliderStyle={{'margin': '10px 0px'}}/>
             </MuiThemeProvider>
           </div>
           <div className="col-6">
-            <input type="number" className="form-control" name="score" min="0" max="10" step="0.1" value={score} onChange={handleFormChange}/>
+            <input type="number" className="form-control" name="score" min="0" max="10" step="0.1" value={score}
+                   onChange={handleFormChange}/>
           </div>
         </div>
       </div>

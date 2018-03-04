@@ -8,9 +8,9 @@ class EpisodeAdd extends React.Component {
     super();
     this.handleFormChange = this.handleFormChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
+    this.setLogo = this.setLogo.bind(this);
     this.state = {
-      episodeTemp: {},
-      logo: "3e21c905-7b9c-4ab5-995f-9232defc4952",
+      episodeTemp: {}
     };
   }
 
@@ -43,8 +43,12 @@ class EpisodeAdd extends React.Component {
   }
 
   submitForm() {
-    this.props.submitForm(this.state.episodeTemp.name, this.state.episodeTemp.code, this.state.logo, this.state.episodeTemp.synopsis, this.state.episodeTemp.score);
-    this.setState({ episodeTemp: { name: '', code: '', synopsis: '', score: undefined } });
+    this.props.submitForm(this.state.episodeTemp.name, this.state.episodeTemp.code, this.state.episodeTemp.logo, this.state.episodeTemp.synopsis, this.state.episodeTemp.score);
+    this.setState({ episodeTemp: { name: '', code: '', logo: undefined, synopsis: '', score: undefined } });
+  }
+
+  setLogo(logo) {
+    this.setState(prevState => ({ episodeTemp : { ...prevState.episodeTemp, logo }}));
   }
 
   render() {
@@ -52,11 +56,17 @@ class EpisodeAdd extends React.Component {
       <div>
         <h4>Ajouter un épisode :</h4>
         <hr/>
-        <EpisodeForm name={this.state.episodeTemp.name} code={this.state.episodeTemp.code} synopsis={this.state.episodeTemp.synopsis} score={this.state.episodeTemp.score} handleFormChange={this.handleFormChange}/>
+        <EpisodeForm
+          name={this.state.episodeTemp.name}
+          code={this.state.episodeTemp.code}
+          logo={this.state.episodeTemp.logo}
+          synopsis={this.state.episodeTemp.synopsis}
+          score={this.state.episodeTemp.score}
+          handleFormChange={this.handleFormChange}/>
         <div className="form-group">
           <button type="submit" className="btn btn-block btn-outline-success" onClick={this.submitForm}>Ajouter cet épisode</button>
         </div>
-        <LogoModal/>
+        <LogoModal setLogo={this.setLogo}/>
       </div>
     );
   }

@@ -11,12 +11,13 @@ class EpisodeDetail extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleFormChange = this.handleFormChange.bind(this);
     this.deleteEpisode = this.deleteEpisode.bind(this);
+    this.setLogo = this.setLogo.bind(this);
     this.state = {
       episode: {},
       episodeTemp: {},
       logo: {},
       status: null,
-      iconStatus: "pending"
+      logoStatus: "pending"
     }
   }
 
@@ -26,11 +27,15 @@ class EpisodeDetail extends React.Component {
       .then(response => response.json())
       .then(episode => {
         this.setState({ episode: episode, episodeTemp: episode });
-        fetch('/api/logos/' + episode.logo)
-          .then(response => response.json())
-          .then(logo => this.setState({ logo, iconStatus: "done" }))
-          .catch(() => this.setState({ iconStatus: "fail" }));
+        this.loadLogo(episode.logo);
       });
+  }
+
+  loadLogo(logo) {
+    fetch('/api/logos/' + logo)
+      .then(response => response.json())
+      .then(logo => this.setState({ logo, logoStatus: "done" }))
+      .catch(() => this.setState({ logoStatus: "fail" }));
   }
 
   onCloseModal() {
@@ -42,6 +47,7 @@ class EpisodeDetail extends React.Component {
       const episodeTemp = {
         name: this.state.episodeTemp.name,
         code: this.state.episodeTemp.code,
+        logo: this.state.episodeTemp.logo,
         synopsis: this.state.episodeTemp.synopsis,
         score: Number(this.state.episodeTemp.score)
       };
@@ -54,6 +60,9 @@ class EpisodeDetail extends React.Component {
       })
         .then(response => response.json())
         .then(episode => {
+          if (this.state.episode.logo !== episode.logo) {
+            this.loadLogo(episode.logo);
+          }
           this.setState({ episode: episode, episodeTemp: episode });
           $('#editModal').modal('hide');
         });
@@ -94,8 +103,12 @@ class EpisodeDetail extends React.Component {
     fetch('/api/episodes/' + this.state.episode.id, { method: 'DELETE' });
   }
 
+  setLogo(logo) {
+    this.setState(prevState => ({ episodeTemp : { ...prevState.episodeTemp, logo }}));
+  }
+
   renderBannerStyle() {
-    switch(this.state.iconStatus) {
+    switch(this.state.logoStatus) {
       case "pending":
         return { backgroundImage: "linear-gradient(135deg, #fee140 0%, #fa709a 100%)" };
       case "done":
@@ -146,12 +159,13 @@ class EpisodeDetail extends React.Component {
             <EditModal
               name={this.state.episodeTemp.name}
               code={this.state.episodeTemp.code}
+              logo={this.state.episodeTemp.logo}
               synopsis={this.state.episodeTemp.synopsis}
               score={this.state.episodeTemp.score}
               handleFormChange={this.handleFormChange}
               status={this.state.status}
               handleSubmit={this.handleSubmit}/>
-            <LogoModal/>
+            <LogoModal setLogo={this.setLogo}/>
           </div>
           :
           <div>
