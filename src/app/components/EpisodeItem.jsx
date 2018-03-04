@@ -4,7 +4,6 @@ class EpisodeItem extends React.Component {
 
   constructor() {
     super();
-    this.deleteEpisode = this.deleteEpisode.bind(this);
     this.state = {
       logo: {},
       iconStatus: "pending"
@@ -16,10 +15,6 @@ class EpisodeItem extends React.Component {
       .then(response => response.json())
       .then(logo => this.setState({ logo, iconStatus: "done" }))
       .catch(() => this.setState({iconStatus: "fail"}));
-  }
-
-  deleteEpisode() {
-    this.props.deleteEpisode(this.props.id);
   }
 
   renderBannerStyle() {
@@ -35,7 +30,7 @@ class EpisodeItem extends React.Component {
       case "done":
         return {
           ...defaultStyle,
-          backgroundImage: `url(data:image/jpg;base64,${this.state.logo.image64})`
+          backgroundImage: `url(${this.state.logo.image64})`
         };
       case "fail":
         return {

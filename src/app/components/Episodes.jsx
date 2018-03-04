@@ -24,7 +24,7 @@ class Episodes extends React.Component {
       code: code,
       logo: logo,
       synopsis: synopsis,
-      score: Number(score)
+      score: score
     };
 
     fetch('/api/episodes', {
@@ -42,7 +42,7 @@ class Episodes extends React.Component {
     return (
       <div className="row">
         <div className="col-md-9 col-sm-12">
-          <EpisodesList episodes={this.state.episodes} deleteEpisode={this.deleteEpisode}/>
+          <EpisodesList episodes={this.state.episodes}/>
         </div>
         <div className="col-md-3 col-sm-12">
           <EpisodeAdd submitForm={this.submitForm}/>

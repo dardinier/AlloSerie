@@ -1,6 +1,7 @@
 import React from 'react';
 import EpisodeForm from "./EpisodeForm";
 import LogoModal from "./LogoModal";
+import {toast} from "react-toastify";
 
 class EpisodeAdd extends React.Component {
 
@@ -10,7 +11,13 @@ class EpisodeAdd extends React.Component {
     this.submitForm = this.submitForm.bind(this);
     this.setLogo = this.setLogo.bind(this);
     this.state = {
-      episodeTemp: {}
+      episodeTemp: {
+        name: '',
+        code: '',
+        logo: undefined,
+        synopsis: '',
+        score: 0
+      }
     };
   }
 
@@ -43,8 +50,28 @@ class EpisodeAdd extends React.Component {
   }
 
   submitForm() {
-    this.props.submitForm(this.state.episodeTemp.name, this.state.episodeTemp.code, this.state.episodeTemp.logo, this.state.episodeTemp.synopsis, this.state.episodeTemp.score);
-    this.setState({ episodeTemp: { name: '', code: '', logo: undefined, synopsis: '', score: undefined } });
+    let hasError = false;
+    if (this.state.episodeTemp.name === "") {
+      toast.error("Le nom est vide.");
+      hasError = true;
+    }
+    if (this.state.episodeTemp.logo === undefined) {
+      toast.error("Aucun logo n'a été défini.");
+      hasError = true;
+    }
+    if (this.state.episodeTemp.code === "") {
+      toast.error("Le code est vide.");
+      hasError = true;
+    }
+    if (this.state.episodeTemp.synopsis === "") {
+      toast.error("Le synopsis est vide.");
+      hasError = true;
+    }
+
+    if (!hasError) {
+      this.props.submitForm(this.state.episodeTemp.name, this.state.episodeTemp.code, this.state.episodeTemp.logo, this.state.episodeTemp.synopsis, this.state.episodeTemp.score);
+      this.setState({ episodeTemp: { name: '', code: '', logo: undefined, synopsis: '', score: undefined } });
+    }
   }
 
   setLogo(logo) {

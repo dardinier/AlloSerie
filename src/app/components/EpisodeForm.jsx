@@ -40,7 +40,7 @@ class EpisodeForm extends React.Component {
                   height: "100px",
                   marginBottom: "0.5rem",
                   borderRadius: "0.25rem",
-                  backgroundImage: `url(data:image/jpg;base64,${this.state.actualLogo.image64})`}}/>
+                  backgroundImage: `url(${this.state.actualLogo.image64})`}}/>
                   <button type="button" className="form-control btn btn-outline-secondary" data-toggle="modal" data-target="#logoModal">
                     Changer le logo actuel
                   </button>

@@ -1,7 +1,7 @@
 import React from 'react';
 import EpisodeItem from './EpisodeItem';
 
-const EpisodesList = ({ episodes, deleteEpisode }) => {
+const EpisodesList = ({ episodes }) => {
   return (
     <div>
       <h4>Liste des épisodes :</h4>
@@ -16,7 +16,6 @@ const EpisodesList = ({ episodes, deleteEpisode }) => {
               code={episode.code}
               logo={episode.logo}
               score={episode.score}
-              deleteEpisode={deleteEpisode}
             />
           )
         })}

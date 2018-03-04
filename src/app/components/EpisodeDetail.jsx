@@ -112,7 +112,7 @@ class EpisodeDetail extends React.Component {
       case "pending":
         return { backgroundImage: "linear-gradient(135deg, #fee140 0%, #fa709a 100%)" };
       case "done":
-        return { backgroundImage: `url(data:image/jpg;base64,${this.state.logo.image64})` };
+        return { backgroundImage: `url(${this.state.logo.image64})` };
       case "fail":
         return { backgroundImage: "url(\"assets/images/no-display.jpg\")" };
     }

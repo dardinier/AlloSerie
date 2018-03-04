@@ -1,4 +1,6 @@
 import React from "react";
+import {FilePicker} from "react-file-picker";
+import {toast} from "react-toastify";
 
 class LogoModal extends React.Component {
 
@@ -17,12 +19,12 @@ class LogoModal extends React.Component {
     $('#logoModal').on('hidden.bs.modal', () => this.onCloseModal());
     fetch('/api/logos')
       .then(response => response.json())
-      .then(logos => this.setState({ logos, logosStatus: 'done' }))
-      .catch(() => this.setState({logosStatus: 'fail' }));
+      .then(logos => this.setState({logos, logosStatus: 'done'}))
+      .catch(() => this.setState({logosStatus: 'fail'}));
   }
 
   onCloseModal() {
-    this.setState({ selectedLogo: {} });
+    this.setState({selectedLogo: {}});
   }
 
   selectLogo(selectedLogo) {
@@ -58,7 +60,8 @@ class LogoModal extends React.Component {
               return (
                 <div className="col-lg-6 col-sm-12 portfolio-item" key={logo.id}>
                   <a className="card" style={this.renderCardStyle(logo)} onClick={() => this.selectLogo(logo)}>
-                    <div className="logo__icon" style={{ height: "200px", backgroundImage: `url(data:image/jpg;base64,${logo.image64})` }}/>
+                    <div className="logo__icon"
+                         style={{height: "200px", backgroundImage: `url(${logo.image64})`}}/>
                   </a>
                 </div>
               );
@@ -77,9 +80,38 @@ class LogoModal extends React.Component {
     $('#logoModal').modal('hide');
   }
 
-  render() {
+  postLogo(file) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      console.log(reader.result);
+
+      const logo = {
+        image64: reader.result
+      };
+      fetch('/api/logos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(logo)
+      })
+        .then(response => response.json())
+        .then(logo => this.setState({logos: [...this.state.logos, logo], selectedLogo: logo }));
+    };
+    reader.onerror = (error) => {
+      console.log('Error: ', error);
+    };
+  }
+
+  setFileError() {
+    toast.error("Le fichier choisi n'est pas une image.");
+  }
+
+  render() {
     return (
-      <div className="modal fade" id="logoModal" tabIndex="-1" role="dialog" aria-labelledby="logoModal" aria-hidden="true">
+      <div className="modal fade" id="logoModal" tabIndex="-1" role="dialog" aria-labelledby="logoModal"
+           aria-hidden="true">
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-header">
@@ -94,9 +126,15 @@ class LogoModal extends React.Component {
               <div className="container-fluid">
                 <ul className="nav justify-content-center tool-bar">
                   <li className="nav-item tool-button">
-                    <button type="button" className="btn btn-outline-success">
-                      Ajouter un nouveau logo
-                    </button>
+                    <FilePicker
+                      extensions={['jpg', 'jpeg', 'png', 'gif']}
+                      onChange={file => this.postLogo(file)}
+                      onError={() => this.setFileError()}
+                    >
+                      <button type="button" className="btn btn-outline-success">
+                        Ajouter un nouveau logo
+                      </button>
+                    </FilePicker>
                   </li>
                 </ul>
                 {this.renderLogos()}
