@@ -1,24 +1,25 @@
-# Project LicPro 2017/2018
+# Allo Série
 
-## Part 1 - Workspace
+Gestionnaire de séries.
 
-## Part 2 - Webpack
+## Installation
 
-## Part 2 - React
+```
+git clone https://github.com/mavincent7/edu-project-template-2018
+cd edu-project-template-2018
+npm install
+npm run startDev
+```
 
-## npm run ...
+* Ouvrir un navigateur et aller sur : [http://localhost:4000](http://localhost:4000)
+
+## Commandes NPM
 
 * npm run build
 * npm run watch
 * npm run start
 * npm run startDev
 * npm run testServer
-
-## Dependencies
-
-* [node-uuid](https://www.npmjs.com/package/node-uuid)
-* [frisby](https://www.npmjs.com/package/frisby)
-* [node-find-files](https://www.npmjs.com/package/node-find-files)
 
 ## Contributors
 
