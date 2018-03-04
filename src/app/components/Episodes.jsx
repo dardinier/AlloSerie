@@ -10,7 +10,6 @@ class Episodes extends React.Component {
       episodes: []
     };
     this.submitForm = this.submitForm.bind(this);
-    this.deleteEpisode = this.deleteEpisode.bind(this);
   }
 
   componentDidMount() {
@@ -37,13 +36,6 @@ class Episodes extends React.Component {
     })
       .then(response => response.json())
       .then(episode => this.setState({episodes: [...this.state.episodes, episode]}));
-  }
-
-  deleteEpisode(id) {
-    fetch('/api/episodes/' + id, {
-      method: 'DELETE'
-    })
-      .then(() => this.setState({episodes: this.state.episodes.filter((episode) => episode.id !== id)}));
   }
 
   render() {
