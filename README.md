@@ -5,8 +5,8 @@ Gestionnaire de séries.
 ## Installation
 
 ```
-git clone https://github.com/mavincent7/edu-project-template-2018
-cd edu-project-template-2018
+git clone https://github.com/dardinier/AlloSerie
+cd AlloSerie
 npm install
 npm run startDev
 ```
